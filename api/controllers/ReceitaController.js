@@ -6,20 +6,32 @@ const { Op } = require("sequelize");
 
 class ReceitaController {
 
-  static async pegaTodasAsReceitas(req, res){
-    try {
-      const todasAsReceitas = await receitasServices.pegaTodosOsRegistros()
-      return res.status(200).json(todasAsReceitas)  
-    } catch (error) {
-      return res.status(500).json(error.message)
-    }
-  }
-
   static async pegaUmaReceita(req, res) {
     const { id } = req.params
     try {
       const umaReceita = await receitasServices.pegaUmRegistro({id})
       return res.status(200).json(umaReceita)
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
+  // Se nenhum parâmetro for passado pega todos os registros
+  static async pegaUmaReceitaPorDescricao(req, res) {
+    const descricao = req.query.descricao
+    try {
+      if (!descricao){
+        const todasAsReceitas = await receitasServices.pegaTodosOsRegistros()
+        return res.status(200).json(todasAsReceitas) 
+      }
+      
+      const umaReceita = await receitasServices.pegaUmRegistro({descricao})
+      if (umaReceita === null){
+        return res.status(404).json("Nenhuma receita com esta descrição") 
+      }
+
+      return res.status(200).json(umaReceita)
+
     } catch (error) {
       return res.status(500).json(error.message)
     }

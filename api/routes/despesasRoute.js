@@ -3,7 +3,7 @@ const DespesaController = require('../controllers/DespesaController');
 
 const router = Router();
 
-router.get('/despesas', DespesaController.pegaTodasAsDespesas);
+router.get('/despesas', DespesaController.pegaUmaDespesaPorDescricao);
 router.get('/despesas/:id?', DespesaController.pegaUmaDespesa);
 router.post('/despesas/', DespesaController.criaDespesa);
 router.put('/despesas/:id?', DespesaController.atualizaDespesa);

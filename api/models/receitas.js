@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Receitas.init({
     descricao: DataTypes.STRING,
     valor: DataTypes.DECIMAL,
-    data: DataTypes.DATE
+    data: DataTypes.DATE,
+    categoria: DataTypes.ENUM("Alimentação", "Saúde", "Moradia", "Transporte", "Educação", "Lazer", "Imprevistos", "Outros")
   }, {
     sequelize,
     modelName: 'Receitas',

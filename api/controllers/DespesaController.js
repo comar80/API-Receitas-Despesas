@@ -3,12 +3,24 @@ const despesasServices = new DespesasServices
 const sequelize = require('sequelize')
 const { Op } = require("sequelize");
 
-class ReceitaController {
+class DespesaController {
 
-  static async pegaTodasAsDespesas(req, res){
+  // Se nenhum parâmetro for passado pega todos os registros
+  static async pegaUmaDespesaPorDescricao(req, res) {
+    const descricao = req.query.descricao
     try {
-      const todasAsDespesas = await despesasServices.pegaTodosOsRegistros()
-      return res.status(200).json(todasAsDespesas)  
+      if (!descricao){
+        const todasAsDespesas = await despesasServices.pegaTodosOsRegistros()
+        return res.status(200).json(todasAsDespesas) 
+      }
+      
+      const umaDespesa = await despesasServices.pegaUmRegistro({descricao})
+      if (umaDespesa === null){
+        return res.status(404).json("Nenhuma despesa com esta descrição") 
+      }
+
+      return res.status(200).json(umaDespesa)
+
     } catch (error) {
       return res.status(500).json(error.message)
     }
@@ -87,4 +99,4 @@ class ReceitaController {
 
 }
 
-module.exports = ReceitaController;
+module.exports = DespesaController;
