@@ -36,6 +36,22 @@ class DespesaController {
     }
   }
 
+  static async pegaDespesasDoMes(req, res) {
+    const {ano, mes} = req.params
+
+    try {
+      const despesasDoMes = await despesasServices.pegaTodosOsRegistros({
+        [Op.and]: [
+          sequelize.where(sequelize.fn('MONTH', sequelize.col('data')), mes),
+          sequelize.where(sequelize.fn('YEAR', sequelize.col('data')), ano),
+        ]
+    })
+      return res.status(200).json(despesasDoMes)  
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
   static async criaDespesa(req, res) {
     const novaDespesa = req.body
 

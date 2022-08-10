@@ -1,5 +1,8 @@
 const database = require('../models')
 
+const sequelize = require('sequelize')
+const { Op } = require("sequelize");
+
 class Services {
     constructor(nomeDoModelo){
         this.nomeDoModelo = nomeDoModelo
@@ -38,6 +41,32 @@ class Services {
     async encontraEContaRegistros (where = {}, agregadores){
         return database[this.nomeDoModelo].findAndCountAll({ where: { ...where }, ...agregadores})
     }
+
+    async somaTodosRegistrosDoMes(ano, mes) {
+
+        return database[this.nomeDoModelo]
+        .sum('valor',{ where: {
+            [Op.and]: [
+              sequelize.where(sequelize.fn('MONTH', sequelize.col('data')), mes),
+              sequelize.where(sequelize.fn('YEAR', sequelize.col('data')), ano),
+            ]
+        }})
+    }
+
+    async somaTodosRegistrosDoMesPorCategoria(ano, mes, categoria) {
+
+        return database[this.nomeDoModelo]
+        .sum('valor',{ where: {
+            data: {
+            [Op.and]: [
+              sequelize.where(sequelize.fn('MONTH', sequelize.col('data')), mes),
+              sequelize.where(sequelize.fn('YEAR', sequelize.col('data')), ano),
+            ]
+        },
+        categoria: categoria
+        }})
+    }
+
 }
 
 module.exports = Services;

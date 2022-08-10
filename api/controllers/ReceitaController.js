@@ -6,16 +6,6 @@ const { Op } = require("sequelize");
 
 class ReceitaController {
 
-  static async pegaUmaReceita(req, res) {
-    const { id } = req.params
-    try {
-      const umaReceita = await receitasServices.pegaUmRegistro({id})
-      return res.status(200).json(umaReceita)
-    } catch (error) {
-      return res.status(500).json(error.message)
-    }
-  }
-
   // Se nenhum parâmetro for passado pega todos os registros
   static async pegaUmaReceitaPorDescricao(req, res) {
     const descricao = req.query.descricao
@@ -32,6 +22,32 @@ class ReceitaController {
 
       return res.status(200).json(umaReceita)
 
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
+  static async pegaUmaReceita(req, res) {
+    const { id } = req.params
+    try {
+      const umaReceita = await receitasServices.pegaUmRegistro({id})
+      return res.status(200).json(umaReceita)
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
+  static async pegaReceitasDoMes(req, res) {
+    const {ano, mes} = req.params
+
+    try {
+      const receitasDoMes = await receitasServices.pegaTodosOsRegistros({
+        [Op.and]: [
+          sequelize.where(sequelize.fn('MONTH', sequelize.col('data')), mes),
+          sequelize.where(sequelize.fn('YEAR', sequelize.col('data')), ano),
+        ]
+    })
+      return res.status(200).json(receitasDoMes)  
     } catch (error) {
       return res.status(500).json(error.message)
     }
