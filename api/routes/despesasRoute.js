@@ -5,6 +5,7 @@ const router = Router();
 
 router.get('/despesas', DespesaController.pegaUmaDespesaPorDescricao);
 router.get('/despesas/:id?', DespesaController.pegaUmaDespesa);
+router.get('/despesas/:ano/:mes', DespesaController.pegaDespesasDoMes);
 router.post('/despesas/', DespesaController.criaDespesa);
 router.put('/despesas/:id?', DespesaController.atualizaDespesa);
 router.delete('/despesas/:id?', DespesaController.removeDespesa);
