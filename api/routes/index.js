@@ -2,6 +2,8 @@ const bodyParser = require('body-parser');
 const receitas = require('./receitasRoute');
 const despesas = require('./despesasRoute');
 const resumo = require('./resumoRoute');
+const usuarios = require('./usuarioRoute');
+
 
 
 module.exports = app => {
@@ -9,6 +11,7 @@ module.exports = app => {
         bodyParser.json(),
         receitas,
         despesas,
-        resumo
+        resumo,
+        usuarios
         )
 }
