@@ -61,6 +61,11 @@ class DespesaController {
     const ano = data.getFullYear()
 
     try {
+
+      if(req.body.descricao === undefined) {
+        throw new Error('Corpo da requisição não pode ser vazio')
+      }
+
       const descricaoExistente = await despesasServices.pegaUmRegistro({
           [Op.and]: [
             { descricao: novaDescricao },
@@ -75,8 +80,13 @@ class DespesaController {
 
 
       const novaDespesaCriada = await despesasServices.criaRegistro(novaDespesa)
-      return res.status(200).json(novaDespesaCriada)
+      return res.status(201).json(novaDespesaCriada)
     } catch (error) {
+
+      if(error.message === 'Corpo da requisição não pode ser vazio'){
+        return res.status(400).json(error.message)
+      }
+      
       return res.status(500).json(error.message)
     }
   }
@@ -86,7 +96,7 @@ class DespesaController {
     const novasInfos = req.body
     try {
       await despesasServices.atualizaRegistro(novasInfos, id)
-      return res.status(200).json({ mensagem: `id ${id} atualizado` })
+      return res.status(204).json({ mensagem: `id ${id} atualizado` })
     } catch (error) {
       return res.status(500).json(error.message)
     }
