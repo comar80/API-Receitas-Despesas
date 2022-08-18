@@ -1,0 +1,10 @@
+{
+  "production": {
+    "username": "SISTEMA_DB_USER",
+    "password": "SISTEMA_DB_PASSWORD",
+    "database": "SISTEMA_DB_NAME",
+    "host": "SISTEMA_DB_HOST",
+    "dialect": "mysql"
+  }
+}
+  
