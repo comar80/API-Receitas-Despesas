@@ -1,19 +1,19 @@
 require('dotenv').config()
 
-const express = require('express');
+const express = require('express')
 const routes = require('./routes/index')
 
-const app = express();
-const port = 3000;
+const app = express()
+const port = 3000
 require('./redis/blocklist-access-token')
 require('./redis/allowlist-refresh-token')
 
-const {estrategiasAutenticacao} = require('./estrategiasAutenticacao')
+const { estrategiasAutenticacao } = require('./estrategiasAutenticacao')
 
-routes(app);
+routes(app)
 
 app.listen(port, () => {
-    console.log(`Ouvindo na porta ${port}`)
+  console.log(`Ouvindo na porta ${port}`)
 })
 
-module.exports = app;
+module.exports = app
