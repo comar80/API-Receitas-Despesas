@@ -1,14 +1,13 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 
 const bcrypt = require('bcrypt')
 
 module.exports = (sequelize, DataTypes) => {
   class Usuario extends Model {
-
-    static associate(models) {
+    static associate (models) {
       // define association here
     }
   }
@@ -16,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     nome: {
       type: DataTypes.STRING,
       validate: {
-        funcaoValidadora: function(dado) {
-          if(dado.length < 3) throw new Error('o campo nome deve ter mais de 3 caracteres')
+        funcaoValidadora: function (dado) {
+          if (dado.length < 3) throw new Error('o campo nome deve ter mais de 3 caracteres')
         }
       }
     },
@@ -32,16 +31,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     senha: DataTypes.STRING
   }, {
-    hooks:{
+    hooks: {
       beforeCreate: async (usuario, options) => {
-        const senhaHash = await bcrypt.hash(usuario.senha, 12);
-        usuario.senha = senhaHash;
+        const senhaHash = await bcrypt.hash(usuario.senha, 12)
+        usuario.senha = senhaHash
       }
     },
     sequelize,
     modelName: 'Usuario',
-    paranoid: true,
-  });
+    paranoid: true
+  })
 
-  return Usuario;
-};
+  return Usuario
+}

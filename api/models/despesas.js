@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Despesas extends Model {
     /**
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate (models) {
       // define association here
     }
   }
@@ -17,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     descricao: DataTypes.STRING,
     valor: DataTypes.DECIMAL,
     data: DataTypes.DATE,
-    categoria: DataTypes.ENUM("Alimentação", "Saúde", "Moradia", "Transporte", "Educação", "Lazer", "Imprevistos", "Outros")
+    categoria: DataTypes.ENUM('Alimentação', 'Saúde', 'Moradia', 'Transporte', 'Educação', 'Lazer', 'Imprevistos', 'Outros')
   }, {
     sequelize,
-    modelName: 'Despesas',
-  });
-  return Despesas;
-};
+    modelName: 'Despesas'
+  })
+  return Despesas
+}

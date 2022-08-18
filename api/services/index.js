@@ -4,8 +4,8 @@ const ResumoServices = require('./ResumoServices')
 const UsuarioServices = require('./UsuarioServices')
 
 module.exports = {
-    ReceitasServices: ReceitasServices,
-    DespesasServices: DespesasServices,
-    ResumoServices: ResumoServices,
-    UsuarioServices: UsuarioServices
+  ReceitasServices,
+  DespesasServices,
+  ResumoServices,
+  UsuarioServices
 }
