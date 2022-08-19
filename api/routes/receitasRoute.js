@@ -1,13 +1,16 @@
-const { Router } = require('express');
-const ReceitaController = require('../controllers/ReceitaController');
+const { Router } = require('express')
+const ReceitaController = require('../controllers/ReceitaController')
 
-const router = Router();
+const middlewaresAutenticacao = require('../middlewaresAutenticacao')
 
-router.get('/receitas', ReceitaController.pegaUmaReceitaPorDescricao);
-router.get('/receitas/:id?', ReceitaController.pegaUmaReceita);
-router.post('/receitas/', ReceitaController.criaReceita);
-router.put('/receitas/:id?', ReceitaController.atualizaReceita);
-router.delete('/receitas/:id?', ReceitaController.removeReceita);
-router.post('/receitas/:id/restaura', ReceitaController.restauraReceita);
+const router = Router()
 
-module.exports = router;
+router.get('/receitas', ReceitaController.pegaUmaReceitaPorDescricao)
+router.get('/receitas/:id?', ReceitaController.pegaUmaReceita)
+router.get('/receitas/:ano/:mes', ReceitaController.pegaReceitasDoMes)
+router.post('/receitas/', middlewaresAutenticacao.bearer, ReceitaController.criaReceita)
+router.put('/receitas/:id?', middlewaresAutenticacao.bearer, ReceitaController.atualizaReceita)
+router.delete('/receitas/:id?', middlewaresAutenticacao.bearer, ReceitaController.removeReceita)
+router.post('/receitas/:id/restaura', middlewaresAutenticacao.bearer, ReceitaController.restauraReceita)
+
+module.exports = router
