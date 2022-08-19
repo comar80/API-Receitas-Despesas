@@ -4,7 +4,7 @@ const express = require('express')
 const routes = require('./routes/index')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 require('./redis/blocklist-access-token')
 require('./redis/allowlist-refresh-token')
 
