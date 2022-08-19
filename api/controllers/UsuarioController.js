@@ -35,9 +35,17 @@ class UsuarioController {
 
   static async criaUsuario (req, res) {
     const novoUsuario = req.body
+
+    const novoEmail = req.body.email
     try {
+      const emailExistente = await usuarioServices.pegaUmRegistro({ email: novoEmail })
+
+      if (emailExistente !== null) {
+        return res.status(400).json('Email já cadastrado')
+      }
+
       const novoUsuarioCriado = await usuarioServices.criaRegistro(novoUsuario)
-      return res.status(200).json(novoUsuarioCriado)
+      return res.status(201).json(novoUsuarioCriado)
     } catch (error) {
       return res.status(500).json(error.message)
     }
