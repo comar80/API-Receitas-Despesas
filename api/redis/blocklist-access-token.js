@@ -1,5 +1,14 @@
 const redis = require('redis')
-const blocklist = redis.createClient({ prefix: 'blocklist-access-token:' })
+const blocklist = redis.createClient(
+  {
+    prefix: 'blocklist-access-token:',
+    url: process.env.REDIS_URL,
+    socket: {
+      tls: true,
+      rejectUnauthorized: false
+    }
+  }
+)
 const manipulaLista = require('./manipula-lista')
 const manipulaBlocklist = manipulaLista(blocklist)
 
