@@ -7,7 +7,7 @@ const router = Router()
 router.get('/usuarios', UsuarioController.pegaUmUsuarioPorEmail)
 router.get('/usuarios/:id', UsuarioController.pegaUmUsuarioPorId)
 
-router.post('/usuarios/', middlewaresAutenticacao.bearer, UsuarioController.criaUsuario)
+router.post('/usuarios/', UsuarioController.criaUsuario)
 router.post('/usuarios/login', middlewaresAutenticacao.local, UsuarioController.login)
 router.post('/usuarios/atualiza_token', middlewaresAutenticacao.refresh, UsuarioController.login)
 router.post('/usuarios/logout', [middlewaresAutenticacao.refresh, middlewaresAutenticacao.bearer], UsuarioController.logout)
